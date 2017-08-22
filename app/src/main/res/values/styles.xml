@@ -170,7 +170,6 @@
         <item name="android:background">@null</item>
         <item name="android:elevation">0dp</item>
         <item name="android:theme">@android:style/ThemeOverlay.Material.Dark</item>
-
     </style>
 
     <style name="Widget.Plaid.OverlayToolbar" parent="android:Widget.Material.ActionBar">
@@ -189,7 +188,6 @@
 
     <style name="TextAppearance.ToolbarTitle" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
         <item name="android:textColor">@color/text_primary_light</item>
-        <item name="android:fontFamily">monospace</item>
     </style>
 
     <style name="TextAppearance.ToolbarTitleSmallCaps" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
@@ -199,14 +197,14 @@
     </style>
 
     <style name="TextAppearance.DribbbleShotTitle" parent="@android:style/TextAppearance.Material.Headline">
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:fontFamily">@font/alegreya_black</item>
         <item name="android:textColor">@color/text_primary_dark</item>
         <item name="lineHeightHint">32sp</item>
     </style>
 
     <style name="TextAppearance.TilePrimary" parent="@android:style/TextAppearance.Material.Subhead">
         <item name="android:letterSpacing">0.01</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:fontFamily">@font/alegreya_black</item>
         <item name="lineHeightHint">20sp</item>
     </style>
 
@@ -216,6 +214,7 @@
     </style>
 
     <style name="TextAppearance.DribbbleShotDescription" parent="@android:style/TextAppearance.Material.Subhead">
+        <item name="android:fontFamily">@font/alegreya</item>
         <item name="android:textColor">@color/text_tertiary_dark</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="lineHeightHint">24sp</item>
