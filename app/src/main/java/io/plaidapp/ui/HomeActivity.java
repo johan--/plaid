@@ -34,9 +34,13 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.provider.FontRequest;
+import android.support.v4.provider.FontsContractCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -50,6 +54,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -97,6 +102,8 @@ import io.plaidapp.util.ViewUtils;
 
 public class HomeActivity extends Activity {
 
+    private static final String TAG = "PlaidHomeActivity";
+
     private static final int RC_SEARCH = 0;
     private static final int RC_AUTH_DRIBBBLE_FOLLOWING = 1;
     private static final int RC_AUTH_DRIBBBLE_USER_LIKES = 2;
@@ -125,6 +132,9 @@ public class HomeActivity extends Activity {
     private DesignerNewsPrefs designerNewsPrefs;
     private DribbblePrefs dribbblePrefs;
 
+    // We'll need a thread to wait
+    private Handler fontHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +150,26 @@ public class HomeActivity extends Activity {
             animateToolbar();
         }
         setExitSharedElementCallback(FeedAdapter.createSharedElementReenterCallback(this));
+
+        FontRequest fontRequest = new FontRequest("com.google.android.gms.fonts",
+                "com.google.android.gms",
+                "name=Alegreya Sans SC&weight=700",
+                R.array.com_google_android_gms_fonts_certs);
+        FontsContractCompat.FontRequestCallback toolbarFontCallback =
+                new FontsContractCompat.FontRequestCallback() {
+                    @Override public void onTypefaceRetrieved(Typeface typeface) {
+                        // If we got our font apply it to the toolbar
+                        styleToolbar(typeface);
+                    }
+                    @Override public void onTypefaceRequestFailed(int reason) {
+                        Log.w(TAG, "Failed to fetch Toolbar font: " + reason);
+                    }
+                };
+
+        // Start async fetch on the handler thread
+        FontsContractCompat.requestFont(this, fontRequest, toolbarFontCallback,
+                getFontHandlerThread());
+
 
         dribbblePrefs = DribbblePrefs.get(this);
         designerNewsPrefs = DesignerNewsPrefs.get(this);
@@ -246,6 +276,8 @@ public class HomeActivity extends Activity {
             }
         });
         setupTaskDescription();
+
+
 
         filtersList.setAdapter(filtersAdapter);
         filtersList.setItemAnimator(new FilterAdapter.FilterAnimator());
@@ -693,6 +725,28 @@ public class HomeActivity extends Activity {
                 overviewIcon,
                 ContextCompat.getColor(this, R.color.primary)));
         overviewIcon.recycle();
+    }
+
+    private void styleToolbar(Typeface typeface) {
+        // this is gross but toolbar doesn't expose it's children
+        for (int i = 0; i < toolbar.getChildCount(); i++) {
+            View rawView = toolbar.getChildAt(i);
+            if (!(rawView instanceof TextView)) {
+                continue;
+            }
+
+            TextView textView = (TextView) rawView;
+            textView.setTypeface(typeface);
+        }
+    }
+
+    private Handler getFontHandlerThread() {
+        if (fontHandler == null) {
+            HandlerThread handlerThread = new HandlerThread("fonts");
+            handlerThread.start();
+            fontHandler = new Handler(handlerThread.getLooper());
+        }
+        return fontHandler;
     }
 
     private void animateToolbar() {
