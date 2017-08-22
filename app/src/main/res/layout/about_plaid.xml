@@ -42,13 +42,14 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@color/background_light"
+            android:paddingBottom="@dimen/spacing_large"
+            android:paddingEnd="@dimen/padding_normal"
             android:paddingStart="@dimen/padding_normal"
             android:paddingTop="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_normal"
-            android:paddingBottom="@dimen/spacing_large"
             android:textAppearance="@style/TextAppearance.About"
             android:textColorHighlight="?android:colorPrimary"
-            android:textColorLink="@color/plaid_links" />
+            android:textColorLink="@color/plaid_links"
+            app:fontFamily="@font/alegreya" />
 
     </LinearLayout>
 
