@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/about_header_height"
             android:text="@string/app_name"
-            android:fontFamily="@font/roboto_mono"
+            android:fontFamily="monospace"
             app:foregroundColor="?android:colorPrimary" />
 
         <io.plaidapp.ui.widget.BaselineGridTextView
