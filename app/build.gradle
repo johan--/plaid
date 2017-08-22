@@ -29,12 +29,12 @@ android {
     buildToolsVersion versions.buildTools
 
     defaultConfig {
-        applicationId "io.plaidapp"
+        applicationId "io.plaidapp.fonts"
         minSdkVersion 21
         targetSdkVersion versions.targetSdk
         versionCode gitCommitCount
         versionName gitTag
-        archivesBaseName = "plaid"
+        archivesBaseName = "plaid-fonts"
         resConfig "en"
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "DRIBBBLE_CLIENT_ID", "\"${dribbble_client_id}\""
