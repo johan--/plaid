@@ -304,9 +304,9 @@
     </style>
 
     <style name="TextAppearance.About" parent="@android:style/TextAppearance.Material.Body1">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/text_secondary_dark</item>
-        <item name="lineHeightHint">24sp</item>
+        <item name="lineHeightHint">26sp</item>
     </style>
 
     <style name="TextAppearance.EmptyText" parent="@style/TextAppearance.DialogContent">
@@ -366,6 +366,7 @@
         <item name="android:textAppearance">@style/TextAppearance.CommentAuthor</item>
         <item name="android:drawablePadding">@dimen/spacing_micro</item>
         <item name="android:background">?android:selectableItemBackgroundBorderless</item>
+        <item name="android:fontFeatureSettings">lnum</item>
     </style>
 
     <style name="ExpandedFabTheme" parent="@android:style/ThemeOverlay.Material.Light">
